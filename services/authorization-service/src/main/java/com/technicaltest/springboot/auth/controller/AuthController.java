@@ -29,7 +29,7 @@ public class AuthController {
 	@PostMapping("/register")
 	public ResponseEntity<AuthResponse> register(@RequestBody UserRegistrationRequest request){
 		try {
-			
+			authService.register(request);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 		}
