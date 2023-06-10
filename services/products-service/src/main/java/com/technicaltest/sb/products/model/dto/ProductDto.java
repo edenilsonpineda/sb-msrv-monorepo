@@ -1,10 +1,7 @@
 package com.technicaltest.sb.products.model.dto;
 
 import java.io.Serializable;
-<<<<<<< HEAD
 import java.math.BigDecimal;
-=======
->>>>>>> main
 
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
@@ -35,11 +32,7 @@ public class ProductDto extends RepresentationModel<ProductDto> implements Seria
 	@GeneratedValue
 	private Long id;
 	private String title;
-<<<<<<< HEAD
 	private BigDecimal price;
-=======
-	private Long price;
->>>>>>> main
 	private String description;
 	
 	private Rating rating;
