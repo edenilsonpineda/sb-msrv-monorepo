@@ -2,8 +2,9 @@ package com.technicaltest.springboot.auth.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -11,8 +12,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.security.web.context.NullSecurityContextRepository;
+import org.springframework.security.web.context.SecurityContextRepository;
 
 import com.technicaltest.springboot.auth.commons.Constants;
+import com.technicaltest.springboot.auth.model.security.Permission;
+import com.technicaltest.springboot.auth.model.security.Role;
 import com.technicaltest.springboot.auth.utils.EnvironmentHelper;
 
 import lombok.RequiredArgsConstructor;;
@@ -25,7 +30,6 @@ import lombok.RequiredArgsConstructor;;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@EnableMethodSecurity
 public class DefaultSecurityConfig extends EnvironmentHelper{
 	
 	private final JwtAuthFilter jwtAuthFilter;
@@ -37,15 +41,19 @@ public class DefaultSecurityConfig extends EnvironmentHelper{
 	@Bean
 	SecurityFilterChain defaultSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
 		
-		httpSecurity.securityMatcher(getEnv().getProperty(Constants.API_ROOT_URL_PATH));
-		
 		httpSecurity
+		.cors(cors -> cors.disable())
+		.csrf(csrf -> csrf.disable())
 		.authorizeHttpRequests(authz -> {
 				authz
 					.requestMatchers(getEnv().getProperty(Constants.API_AUTH_URL_MAPPING))
 					.permitAll();
-				authz.requestMatchers(getEnv().getProperty(Constants.API_ROOT_URL_PATH));
-				authz.anyRequest().authenticated();
+				authz
+					.requestMatchers(getEnv().getProperty(Constants.API_AUTH_ROOT_URL_MAPPING))
+					.permitAll();
+				
+				authz.anyRequest().fullyAuthenticated();
+				
 			}
 		)
 		.sessionManagement(sessionManagement -> 

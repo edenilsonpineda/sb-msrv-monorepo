@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.context.NullSecurityContextRepository;
+import org.springframework.security.web.context.SecurityContextRepository;
 
 import com.technicaltest.springboot.auth.commons.Constants;
 import com.technicaltest.springboot.auth.repository.UserRepository;
@@ -58,5 +60,10 @@ public class ApplicationConfiguration extends EnvironmentHelper{
     @Bean
     PasswordEncoder customPasswordEncoder() {
     	return new BCryptPasswordEncoder();
+    }
+    
+    @Bean
+    SecurityContextRepository securityContextRepository(){
+        return new NullSecurityContextRepository(); // I use Null Repository since I don't need it for anything except store information in UserDetails
     }
 }
