@@ -11,7 +11,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.technicaltest.springboot.auth.commons.Constants;
 import com.technicaltest.springboot.auth.model.security.AuthRequest;
@@ -50,12 +49,14 @@ public class AuthenticationServiceImpl implements IAuthService {
 						request.getEmail(), 
 						request.getPassword()));
 			
-			UserDetails user = userRepository.findByEmail(request.getEmail())
+			User user = userRepository.findByEmail(request.getEmail())
 					.orElseThrow();
 			
 			
 			String jwtToken = jwtService.generateToken(user);
 			String refreshToken = jwtService.generateRefreshToken(user);
+			
+			saveUserToken(user, jwtToken);
 			
 			authResponse = AuthResponse.builder().accessToken(jwtToken).refreshToken(refreshToken).build();
 			
@@ -97,6 +98,7 @@ public class AuthenticationServiceImpl implements IAuthService {
 			User newUserDetails = User.builder()
 					.firstName(userRegistrarRequest.getFirstName())
 					.lastName(userRegistrarRequest.getLastName())
+					.username(userRegistrarRequest.getEmail())
 					.email(userRegistrarRequest.getEmail())
 					.password(passwordEncoder.encode(userRegistrarRequest.getPassword()))
 					.role(Role.CUSTOMER)
