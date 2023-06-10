@@ -29,7 +29,7 @@ Follow these steps to start developing with this project:
 
 Ports used: 🔒
 - Auth service: 9081
-- Products service: 8082
+- Products service: 9082
 - Orders service: 9083
 - Order details service: 9084
 - Payments service: 9085
