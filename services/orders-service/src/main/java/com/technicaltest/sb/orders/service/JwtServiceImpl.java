@@ -1,4 +1,4 @@
-package com.technicaltest.springboot.auth.service;
+package com.technicaltest.sb.orders.service;
 
 import java.security.Key;
 import java.util.Date;
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import com.technicaltest.springboot.auth.service.interfaces.JwtService;
+import com.technicaltest.sb.orders.service.interfaces.JwtService;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -19,7 +19,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 
 @Service
-public class JwtServiceImpl implements JwtService {
+public class JwtServiceImpl implements JwtService{
 
 	@Value("${app.security.jwt.secret-key}")
 	private String secretKey;
@@ -27,7 +27,6 @@ public class JwtServiceImpl implements JwtService {
 	private long jwtExpiration;
 	@Value("${app.security.jwt.refresh-token.expiration}")
 	private long refreshExpiration;
-	
 
 	public String extractUsername(String token) {
 		return extractClaim(token, Claims::getSubject);
@@ -51,7 +50,6 @@ public class JwtServiceImpl implements JwtService {
 	}
 
 	private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails, long expiration) {
-		expiration = expiration > 0 ? expiration : 86400000L;
 		return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername())
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + expiration))
@@ -81,7 +79,8 @@ public class JwtServiceImpl implements JwtService {
 	}
 
 	@Override
-	public String generateToken(String username) {
-		return null;
+	public boolean isTokenValid(String token) {
+		
+		return !isTokenExpired(token);
 	}
 }

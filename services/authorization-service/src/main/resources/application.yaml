@@ -20,7 +20,7 @@ spring:
     locale: es_SV
     
 server:
-  port: 9000
+  port: 9081
   servlet:
     context-path: /api/v1/demo
   error:

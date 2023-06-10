@@ -1,19 +1,15 @@
-package com.technicaltest.sb.products.model.dto;
+package com.technicaltest.sb.orders.model;
 
 import java.io.Serializable;
-<<<<<<< HEAD
 import java.math.BigDecimal;
-=======
->>>>>>> main
-
-import org.springframework.hateoas.RepresentationModel;
-import org.springframework.hateoas.server.core.Relation;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.technicaltest.sb.orders.model.base.BaseEntity;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,23 +21,23 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@Relation(collectionRelation = "products")
 @JsonInclude(Include.NON_NULL)
-public class ProductDto extends RepresentationModel<ProductDto> implements Serializable {
+public class Product extends BaseEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue
-	private Long id;
+	
+	@NotNull
 	private String title;
-<<<<<<< HEAD
+	
+	@NotNull
 	private BigDecimal price;
-=======
-	private Long price;
->>>>>>> main
+	
+	@NotNull
 	private String description;
 	
-	private Rating rating;
 
+	@ManyToOne
+	@JoinColumn(name = "order_id")
+	private Order order;
 }

@@ -1,41 +1,38 @@
 spring:
   application:
-    name: products-service
+    name: authorization-service
   datasource:
-<<<<<<< HEAD
-    url: jdbc:h2:file:./products
-=======
-    url: jdbc:h2:file:./data
->>>>>>> main
+    url: jdbc:h2:file:./orders
     driver-class-name: org.h2.Driver
     username: sa
     password: 
   jpa:
-    show-sql: false
+    show-sql: true
     properties:
       hibernate:
+        enable_lazy_load_no_trans: true
         format-sql: true
         dialect: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: update   
   jackson:
     time-zone: America/El_Salvador
     locale: es_SV
     
 server:
-  port: 9100
+  port: 9081
   servlet:
-    context-path: /api/v1/demo/shop
+    context-path: /api/v1/demo
   error:
     include-stacktrace: never
     
     
-logging:
-  level:
-    root: INFO
-    '[org.springframework.web]': INFO
-    '[org.springframework.security]': INFO
-    '[org.springframework.oauth2]': INFO
+#logging:
+#  level:
+#    root: INFO
+#    '[org.springframework.web]': INFO
+#    '[org.springframework.security]': INFO
+#    '[org.springframework.oauth2]': INFO
     
 
     
@@ -50,14 +47,10 @@ app:
   constants:
     api:
       consumer:
-        fake-api-url: https://fakestoreapi.com
+        local-products-service: http://localhost:9081${server.servlet.context-path}/products
       authroot-url: "/auth"
       auth-url: "/auth/**"
       root-path: "/api/**"
+      secured-path: /shop/**
     messages:
       notfound: '%s not found.'
-    
-    
-    
-
-
