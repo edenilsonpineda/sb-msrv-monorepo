@@ -13,6 +13,6 @@ RUN ./gradlew clean build assemble -x test
 # Set the entry point for the container to the main class of the Spring Boot application
 COPY /build/libs/authorization-service-0.0.1-SNAPSHOT.jar authorization-service.jar
 
-EXPOSE 9081
+EXPOSE 9081:9081
 
 ENTRYPOINT ["java", "-jar", "authorization-service.jar"]

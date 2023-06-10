@@ -11,8 +11,8 @@ COPY . .
 RUN ./gradlew clean build assemble -x test 
 
 # Set the entry point for the container to the main class of the Spring Boot application
-COPY /build/libs/orders-service-0.0.1-SNAPSHOT.jar orders-service.jar
+COPY /build/libs/payment-service-0.0.1-SNAPSHOT.jar payment-service.jar
 
-EXPOSE 9083:9083
+EXPOSE 9085:9085
 
-ENTRYPOINT ["java", "-jar", "orders-service.jar"]
+ENTRYPOINT ["java", "-jar", "payment-service.jar"]
