@@ -1,9 +1,0 @@
-{
-    "java.configuration.updateBuildConfiguration": "interactive",
-    "java.project.sourcePaths": [
-        "services/authservice",
-        "services/orderdetailservice",
-        "services/ordersservice",
-        "services/productsservice"
-    ]
-}

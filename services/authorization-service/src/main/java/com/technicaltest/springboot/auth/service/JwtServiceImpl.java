@@ -1,10 +1,5 @@
 package com.technicaltest.springboot.auth.service;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
@@ -15,8 +10,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.technicaltest.springboot.auth.service.interfaces.JwtService;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+
 @Service
-public class JwtServiceImpl {
+public class JwtServiceImpl implements JwtService {
 
 	@Value("${app.security.jwt.secret-key}")
 	private String secretKey;
@@ -24,6 +27,10 @@ public class JwtServiceImpl {
 	private long jwtExpiration;
 	@Value("${app.security.jwt.refresh-token.expiration}")
 	private long refreshExpiration;
+	
+	public JwtServiceImpl(String secretKey) {
+		this.secretKey = secretKey;
+	}
 
 	public String extractUsername(String token) {
 		return extractClaim(token, Claims::getSubject);
@@ -47,6 +54,7 @@ public class JwtServiceImpl {
 	}
 
 	private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails, long expiration) {
+		expiration = expiration > 0 ? expiration : 86400000L;
 		return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername())
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + expiration))
@@ -73,5 +81,10 @@ public class JwtServiceImpl {
 	private Key getSignInKey() {
 		byte[] keyBytes = Decoders.BASE64.decode(secretKey);
 		return Keys.hmacShaKeyFor(keyBytes);
+	}
+
+	@Override
+	public String generateToken(String username) {
+		return null;
 	}
 }

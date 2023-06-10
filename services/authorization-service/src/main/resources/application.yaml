@@ -10,11 +10,11 @@ spring:
     show-sql: true
     properties:
       hibernate:
+        enable_lazy_load_no_trans: true
         format-sql: true
         dialect: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: update
-      
+      ddl-auto: update   
   jackson:
     time-zone: America/El_Salvador
     locale: es_SV
@@ -23,6 +23,9 @@ server:
   port: 9000
   servlet:
     context-path: /api/v1/demo
+  error:
+    include-stacktrace: never
+    
     
 #logging:
 #  level:
@@ -46,9 +49,10 @@ app:
       authroot-url: "/auth"
       auth-url: "/auth/**"
       root-path: "/api/**"
+      secured-path: /shop/**
     messages:
       notfound: '%s not found.'
-    secured-path: /api/v1/test/shop/**
+    
     
     
 

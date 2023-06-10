@@ -27,7 +27,7 @@ public class Token {
 	@GeneratedValue
 	private Long id;
 	
-	@Column
+	@Column(unique = true)
 	private String tokenValue;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -35,7 +35,7 @@ public class Token {
 	private User user;
 	
 	@Enumerated(EnumType.STRING)
-	private TokenType tokenType = TokenType.BEARER;
+	private static final TokenType tokenType = TokenType.BEARER;
 	
 	private boolean revoked;
 	private boolean expired;
