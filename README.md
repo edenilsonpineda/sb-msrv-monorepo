@@ -1,5 +1,4 @@
 # SpringBoot Microservices Monorepo (sb-msrv-monorepo)
-========
 
 Mono repo for an ecommerce type, based on microservices architecture using Spring Boot, OpenFeign and H2 db.
 > **Note:** OpenJDK v17.0.7 have been used to create this project. :pushpin: . Also Docker and docker-compose is required to run all the
