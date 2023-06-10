@@ -28,9 +28,6 @@ public class JwtServiceImpl implements JwtService {
 	@Value("${app.security.jwt.refresh-token.expiration}")
 	private long refreshExpiration;
 	
-	public JwtServiceImpl(String secretKey) {
-		this.secretKey = secretKey;
-	}
 
 	public String extractUsername(String token) {
 		return extractClaim(token, Claims::getSubject);

@@ -7,6 +7,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.TestInstance;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import com.technicaltest.springboot.auth.TestUtils;
 import com.technicaltest.springboot.auth.model.security.User;
@@ -14,6 +16,8 @@ import com.technicaltest.springboot.auth.service.JwtServiceImpl;
 import com.technicaltest.springboot.auth.service.interfaces.JwtService;
 import com.technicaltest.springboot.auth.utils.JwtUtils;
 
+@SpringBootTest
+@EnableConfigurationProperties
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class JwtServiceTest extends TestUtils{
 	
@@ -23,7 +27,7 @@ class JwtServiceTest extends TestUtils{
 	@BeforeAll
 	void beforeAll() {
 		String secretKey = JwtUtils.generateSecretKey();
-		jwtService = new JwtServiceImpl(secretKey);
+		jwtService = new JwtServiceImpl();
 		
 	}
 

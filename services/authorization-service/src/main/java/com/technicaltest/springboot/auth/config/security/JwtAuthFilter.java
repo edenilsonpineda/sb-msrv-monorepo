@@ -1,7 +1,6 @@
 package com.technicaltest.springboot.auth.config.security;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.technicaltest.springboot.auth.commons.Constants;
-import com.technicaltest.springboot.auth.model.security.User;
 import com.technicaltest.springboot.auth.repository.TokenRepository;
 import com.technicaltest.springboot.auth.repository.UserRepository;
 import com.technicaltest.springboot.auth.service.JwtServiceImpl;
