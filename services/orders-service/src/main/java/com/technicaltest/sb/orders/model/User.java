@@ -1,7 +1,5 @@
 package com.technicaltest.sb.orders.model;
 
-import java.io.Serializable;
-
 import com.technicaltest.sb.orders.model.base.BaseEntity;
 
 import jakarta.persistence.Entity;
@@ -20,7 +18,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "_user")
 @EqualsAndHashCode(callSuper = false)
-public class User extends BaseEntity implements Serializable{
+public class User extends BaseEntity{
 	private static final long serialVersionUID = 1L;
 
 	private String firstName;

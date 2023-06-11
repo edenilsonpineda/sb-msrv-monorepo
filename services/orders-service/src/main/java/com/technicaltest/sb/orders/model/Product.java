@@ -5,10 +5,7 @@ import java.math.BigDecimal;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.technicaltest.sb.orders.model.base.BaseEntity;
 
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,7 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @JsonInclude(Include.NON_NULL)
-public class Product extends BaseEntity implements Serializable {
+public class Product implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -35,9 +32,4 @@ public class Product extends BaseEntity implements Serializable {
 	
 	@NotNull
 	private String description;
-	
-
-	@ManyToOne
-	@JoinColumn(name = "order_id")
-	private Order order;
 }
