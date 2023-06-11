@@ -36,8 +36,7 @@ public class ProductOrder extends BaseEntity{
 	@JoinColumn(name = "order_id", nullable = false, updatable = false)
 	private Order order;
 	
-	@ManyToOne(optional = false)
-	@JoinColumn(name = "product_id", nullable = false)
+	@Transient
 	private Product product;
 	
 	@Transient
