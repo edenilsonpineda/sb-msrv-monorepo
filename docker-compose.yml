@@ -1,0 +1,47 @@
+version: "3"
+services:
+  authorization:
+    build: ./services/authorization-service
+    networks:
+      - authorization-network
+      - products-network
+      - orders-network
+      - payment-network
+    ports:
+      - "9081:9081"
+
+  products:
+    build: ./services/products-service
+    networks:
+      - authorization-network
+      - products-network
+      - orders-network
+      - payment-network
+    ports:
+      - "9082:9082"
+
+  orders:
+    build: ./services/orders-service
+    ports:
+      - "9083:9083"
+    depends_on:
+      - authorization
+      - products
+
+  payment:
+    build: ./services/payment-service
+    networks:
+      - authorization-network
+      - products-network
+      - orders-network
+      - payment-network
+    ports:
+      - "9085:9085"
+    depends_on:
+      - orders
+
+networks:
+  authorization-network:
+  products-network:
+  orders-network:
+  payment-network:

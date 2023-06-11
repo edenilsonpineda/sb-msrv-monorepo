@@ -1,18 +1,40 @@
-# Set base image to OpenJDK 17
-FROM openjdk:17-slim
+# using multistage docker build
+# ref: https://docs.docker.com/develop/develop-images/multistage-build/
+# temp container to build using gradle
+FROM openjdk:17-slim as TEMP_BUILD_IMAGE
 
-# Set the working directory to /app
-WORKDIR /app
+ENV APP_HOME=/user/app
 
-# Copy the source files from the host machine to the container's working directory
+# Set the working directory to /user/app
+WORKDIR ${APP_HOME}
+
+# Copy from host to image filesystem
 COPY . .
 
-# Build the application with Gradle
-RUN ./gradlew clean build assemble -x test 
+# Give permissions to Gradle
+RUN chmod +x ./gradlew
 
-# Set the entry point for the container to the main class of the Spring Boot application
-COPY /build/libs/products-service-0.0.1-SNAPSHOT.jar products-service.jar
+# build project
+RUN ./gradlew clean build -x test
+RUN ./gradlew assemble
 
-EXPOSE 9082:9082
 
-ENTRYPOINT ["java", "-jar", "products-service.jar"]
+# Set base image to OpenJDK 17 of actual container
+FROM openjdk:17-slim
+
+LABEL MAINTAINER = "@edenilsonpineda"
+LABEL VERSION = "1.0"
+LABEL SERVICE="products"
+
+ENV ARTIFACT_NAME=products-service-0.0.1-SNAPSHOT.jar
+ENV APP_HOME=/user/app
+ENV APP_PORT=9082
+
+# Set the working directory to /user/app
+WORKDIR ${APP_HOME}
+
+COPY --from=TEMP_BUILD_IMAGE ${APP_HOME}/build/libs/${ARTIFACT_NAME} .
+
+#EXPOSE ${APP_PORT}:${APP_PORT}
+
+ENTRYPOINT exec java -jar ${ARTIFACT_NAME}
