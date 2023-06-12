@@ -2,7 +2,6 @@ package com.technicaltest.sb.orders.model.dto;
 
 import java.util.List;
 
-import com.technicaltest.sb.orders.model.Product;
 import com.technicaltest.sb.orders.model.enums.OrderStatus;
 
 import lombok.AllArgsConstructor;
@@ -15,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class OrderRequestDto {
 	private Long id;
 	private OrderStatus orderStatus;
-	private List<Product> products;
+	private List<ProductDto> products;
 	private Long customerId;
 	
 }

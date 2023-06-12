@@ -4,11 +4,13 @@ services:
     build: ./services/authorization-service
     networks:
       - authorization-network
-      - products-network
       - orders-network
       - payment-network
+      - db-network
     ports:
       - "9081:9081"
+    depends_on:
+      - db
 
   products:
     build: ./services/products-service
@@ -17,11 +19,18 @@ services:
       - products-network
       - orders-network
       - payment-network
+      - db-network
     ports:
       - "9082:9082"
 
   orders:
     build: ./services/orders-service
+    networks:
+      - authorization-network
+      - products-network
+      - orders-network
+      - payment-network
+      - db-network
     ports:
       - "9083:9083"
     depends_on:
@@ -35,13 +44,37 @@ services:
       - products-network
       - orders-network
       - payment-network
+      - db-network
     ports:
       - "9085:9085"
     depends_on:
       - orders
+  db:
+    image: postgres
+    restart: always
+    secrets: 
+      - db-password
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - db-network
+    environment:
+      - POSTGRES_DB=ecommercedb
+      - POSTGRES_PASSWORD_FILE=/run/secrets/db-password
+    ports:
+      - "5432:5432"
+
+volumes:
+  db-data:
+
+secrets:
+  db-password:
+    file: data/password.txt
 
 networks:
+  db-network:
   authorization-network:
   products-network:
   orders-network:
+  order-details-network:
   payment-network:

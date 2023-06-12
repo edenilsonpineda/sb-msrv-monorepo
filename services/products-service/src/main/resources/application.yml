@@ -19,7 +19,7 @@ spring:
     locale: es_SV
     
 server:
-  port: 9100
+  port: 9082
   servlet:
     context-path: /api/v1/demo/shop
   error:

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.technicaltest.sb.products.config.ProductsServiceClientFallbackFactory;
@@ -19,5 +20,5 @@ public interface IProductFakeApiFeignClientService {
 	List<ProductDto> getAllByLimit(@RequestParam(value = "size", name = "size") String size);
 	
 	@GetMapping("/products/{id}")
-	ProductDto getById(@RequestParam(value = "productId", name = "productId") Integer id);
+	ProductDto getById(@PathVariable(value = "id") Integer id);
 }

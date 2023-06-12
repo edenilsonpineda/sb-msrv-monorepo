@@ -13,7 +13,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,11 +24,12 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
-@Entity(name = "orders")
+@Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
+@Table(name = "orders")
 public class Order extends BaseEntity {
 	
 	private static final long serialVersionUID = -2271837054938297195L;
@@ -36,7 +39,7 @@ public class Order extends BaseEntity {
 	private OrderStatus orderStatus = OrderStatus.PENDING; // by default all orders will be in a pending state
 	
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-	private List<ProductOrder> productsOrders;
+	private List<OrderProduct> productsOrders;
 	
 	@Column(nullable = false)
 	private BigDecimal total;
@@ -49,11 +52,19 @@ public class Order extends BaseEntity {
 	@Transient
 	BigDecimal getTotalOrder() {
 		BigDecimal sum = new BigDecimal(0);
-		List<ProductOrder> productOrders = getProductsOrders();
-		for (ProductOrder productOrder : productOrders) {
+		List<OrderProduct> productOrders = getProductsOrders();
+		for (OrderProduct productOrder : productOrders) {
 			sum = sum.add(productOrder.getTotal());
 		}
 		
 		return sum;
 	}
+	
+	@Transient
+	public int getTotalProducts() {
+		return this.getProductsOrders().size();
+	}
+	
+	@ManyToOne(optional = false)
+	private User user;
 }

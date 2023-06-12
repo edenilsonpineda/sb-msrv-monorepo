@@ -9,11 +9,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.technicaltest.sb.orders.exception.AppServiceException;
 import com.technicaltest.sb.orders.exception.UnauthorizedException;
 import com.technicaltest.sb.orders.model.dto.OrderRequestDto;
+import com.technicaltest.sb.orders.model.dto.OrderResponseDto;
 import com.technicaltest.sb.orders.service.interfaces.IOrderService;
 import com.technicaltest.sb.orders.service.interfaces.JwtService;
-import com.technicaltest.sb.orders.utils.AppServiceException;
 import com.technicaltest.sb.orders.utils.HttpUtils;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -31,7 +32,7 @@ public class OrderController {
 	private JwtService jwtService;
 	
 	@PostMapping
-	public ResponseEntity<?> createOrder(@RequestHeader HttpHeaders headers,
+	public ResponseEntity<OrderResponseDto> createOrder(@RequestHeader HttpHeaders headers,
 			@Valid @RequestBody OrderRequestDto orderRequest){
 		Map<String, String> httpHeaders = headers.toSingleValueMap();
 		String token = HttpUtils.getAuthorizationHeader(httpHeaders);
@@ -45,6 +46,8 @@ public class OrderController {
 			log.warn("Token is expired");
 			throw new AppServiceException("Invalid JWT token");
 		}
+		
+		
 		return ResponseEntity.ok(orderService.addOrder(orderRequest));
 	}
 }

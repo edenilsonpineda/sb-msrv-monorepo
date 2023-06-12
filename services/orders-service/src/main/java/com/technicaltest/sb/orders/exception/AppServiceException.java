@@ -1,4 +1,4 @@
-package com.technicaltest.sb.orders.utils;
+package com.technicaltest.sb.orders.exception;
 
 import lombok.Getter;
 

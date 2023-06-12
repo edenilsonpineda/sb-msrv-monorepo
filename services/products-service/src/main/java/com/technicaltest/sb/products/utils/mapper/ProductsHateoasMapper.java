@@ -1,14 +1,17 @@
 package com.technicaltest.sb.products.utils.mapper;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+
 import java.util.List;
 
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 
 import com.technicaltest.sb.products.controller.ProductsController;
 import com.technicaltest.sb.products.model.dto.ProductDto;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 
 @Component
@@ -30,5 +33,14 @@ public class ProductsHateoasMapper {
 		Link selfReLink = linkTo(ProductsController.class).withSelfRel();
 		return CollectionModel.of(products, selfReLink);
 	}
-
+	
+	public EntityModel<ProductDto> mapProductAsEntityModel(ProductDto product){
+		if(product == null) throw new NullPointerException("Product is null");
+		
+		EntityModel<ProductDto> productEntityModel = EntityModel.of(product);
+		productEntityModel.add(linkTo(ProductsController.class).slash(product.getId()).withSelfRel())
+			.add(linkTo(ProductsController.class).withRel("products").withType(HttpMethod.GET.name()));
+		
+		return productEntityModel;
+	}
 }

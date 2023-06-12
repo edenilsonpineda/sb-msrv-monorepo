@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,12 +58,30 @@ public class ProductsController {
 				products = productService.getAll();
 			}
 			
-			CollectionModel<ProductDto> result = productsHateoasMapper.mapProductsToModel(products);
+			CollectionModel<ProductDto> transformProductsResponse = productsHateoasMapper.mapProductsToModel(products);
 			
-			responseEntity = responseEntityUtil.createOkResponse(result, HttpStatus.OK.toString(), "");
+			responseEntity = responseEntityUtil.createOkResponse(transformProductsResponse, HttpStatus.OK.toString(), "");
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			throw new AppServiceException("An error ocurred, products cannot be retrieved.");
+		}
+		return responseEntity;
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<?> getSingleProduct(@RequestHeader HttpHeaders httpHeaders,
+			@PathVariable("id") Integer productId){
+		ResponseEntity<?> responseEntity = null;
+		try {
+			
+			ProductDto productDto = productService.getById(productId);
+			log.info("Product with id: {}, {}", productId, productDto);
+			EntityModel<ProductDto> transformProductResponse = productsHateoasMapper.mapProductAsEntityModel(productDto);
+			
+			responseEntity = responseEntityUtil.createOkResponse(transformProductResponse, HttpStatus.OK.toString(), "");
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			throw e;
 		}
 		return responseEntity;
 	}

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.technicaltest.sb.orders.model.Order;
 import com.technicaltest.sb.orders.model.dto.OrderRequestDto;
 import com.technicaltest.sb.orders.model.dto.OrderResponseDto;
+import com.technicaltest.sb.orders.model.enums.OrderStatus;
 import com.technicaltest.sb.orders.repository.OrderRepository;
 import com.technicaltest.sb.orders.service.interfaces.IOrderService;
 import com.technicaltest.sb.orders.service.interfaces.IProductsLocalFeignClientService;
@@ -20,15 +21,13 @@ public class OrderServiceImpl implements IOrderService{
 	
 	@Autowired
 	private OrderRepository orderRepository;
-	
-	@Autowired
-	private IProductsLocalFeignClientService productsService;
 
 	@Override
 	public OrderResponseDto addOrder(OrderRequestDto orderRequest) {
 		try {
 			Order order = Order.builder()
-					.orderCreatedDate(LocalDate.now()).build();
+					.orderCreatedDate(LocalDate.now())
+					.orderStatus(OrderStatus.PENDING).build();
 			
 			this.orderRepository.save(order);
 		} catch (Exception e) {

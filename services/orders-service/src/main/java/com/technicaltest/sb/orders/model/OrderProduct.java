@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class ProductOrder extends BaseEntity{
+public class OrderProduct extends BaseEntity{
 	
 	private static final long serialVersionUID = 1L;
 	
