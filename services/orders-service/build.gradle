@@ -36,7 +36,8 @@ implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
 	
 	
 	// database tools
-	implementation 'com.h2database:h2'
+	//implementation 'com.h2database:h2'
+	runtimeOnly 'org.postgresql:postgresql'
 	
 	// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'

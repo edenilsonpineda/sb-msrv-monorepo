@@ -17,7 +17,7 @@ spring:
   jackson:
     time-zone: America/El_Salvador
     locale: es_SV
-    
+
 server:
   port: 9082
   servlet:

@@ -1,4 +1,4 @@
-package com.technicaltest.sb.products.service.interfaces;
+package com.technicaltest.sb.products.feign.client;
 
 import java.util.List;
 

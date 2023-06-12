@@ -1,8 +1,8 @@
-package com.technicaltest.sb.orders.model;
+package com.technicaltest.sb.payment.model;
 
 import java.math.BigDecimal;
 
-import com.technicaltest.sb.orders.model.base.BaseEntity;
+import com.technicaltest.sb.payment.model.base.BaseEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -37,7 +37,7 @@ public class OrderProduct extends BaseEntity{
 	private Order order;
 	
 	@ManyToOne(optional = false)
-	@JoinColumn(name = "")
+	@JoinColumn(name = "product_id", nullable = false)
 	private Product product;
 	
 	@Transient

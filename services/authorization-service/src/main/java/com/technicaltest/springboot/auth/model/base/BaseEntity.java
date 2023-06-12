@@ -1,4 +1,4 @@
-package com.technicaltest.sb.orders.model.base;
+package com.technicaltest.springboot.auth.model.base;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -43,7 +43,7 @@ public class BaseEntity implements Serializable {
 	private LocalDateTime createdAt;
 
 	@CreatedBy
-	@Column
+	@Column(nullable = false, updatable = false)
 	private String createdBy;
 
 	@Column

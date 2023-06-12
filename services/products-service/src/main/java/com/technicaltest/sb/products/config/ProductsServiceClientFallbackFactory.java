@@ -7,9 +7,9 @@ import java.util.List;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
 
+import com.technicaltest.sb.products.feign.client.IProductFakeApiFeignClientService;
 import com.technicaltest.sb.products.model.dto.ProductDto;
 import com.technicaltest.sb.products.model.dto.Rating;
-import com.technicaltest.sb.products.service.interfaces.IProductFakeApiFeignClientService;
 
 import lombok.extern.slf4j.Slf4j;
 

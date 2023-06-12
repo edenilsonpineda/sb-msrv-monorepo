@@ -1,13 +1,12 @@
-package com.technicaltest.sb.orders.model;
+package com.technicaltest.sb.payment.model;
 
 import java.math.BigDecimal;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.technicaltest.sb.orders.model.base.BaseEntity;
+import com.technicaltest.sb.payment.model.base.BaseEntity;
 
 import jakarta.persistence.Entity;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,14 +24,8 @@ public class Product extends BaseEntity{
 	
 	private static final long serialVersionUID = 1L;
 	
-	
-	@NotNull
 	private String title;
-	
-	@NotNull
 	private BigDecimal price;
-	
-	@NotNull
 	private String description;
 	
 }

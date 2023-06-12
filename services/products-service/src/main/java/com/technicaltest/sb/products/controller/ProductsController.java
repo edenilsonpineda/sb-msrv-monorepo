@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.technicaltest.sb.products.feign.client.IProductFakeApiFeignClientService;
 import com.technicaltest.sb.products.model.dto.ProductDto;
-import com.technicaltest.sb.products.service.interfaces.IProductFakeApiFeignClientService;
 import com.technicaltest.sb.products.utils.mapper.ProductsHateoasMapper;
 import com.technicaltest.sb.products.utils.web.AppServiceException;
 import com.technicaltest.sb.products.utils.web.ResponseEntityUtil;

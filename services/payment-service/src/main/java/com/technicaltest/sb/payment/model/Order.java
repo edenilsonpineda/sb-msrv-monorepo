@@ -1,12 +1,12 @@
-package com.technicaltest.sb.orders.model;
+package com.technicaltest.sb.payment.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.technicaltest.sb.orders.model.base.BaseEntity;
-import com.technicaltest.sb.orders.model.enums.OrderStatus;
+import com.technicaltest.sb.payment.model.base.BaseEntity;
+import com.technicaltest.sb.payment.model.enums.OrderStatus;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.CascadeType;

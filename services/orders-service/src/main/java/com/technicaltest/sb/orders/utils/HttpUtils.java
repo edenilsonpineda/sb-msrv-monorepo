@@ -8,6 +8,10 @@ public final class HttpUtils {
 	private HttpUtils(){}
 	
 	public static String getAuthorizationHeader(Map<String, String> headers) {
-		return headers.getOrDefault(Constants.AUTHORIZATION_HEADER, "");
+		String tokenToReturn = headers.getOrDefault(Constants.AUTHORIZATION_HEADER, "");
+		tokenToReturn = !tokenToReturn.isBlank() ? tokenToReturn.split(" ")[1].trim() : "";
+		
+		return tokenToReturn;
 	}
+	
 }

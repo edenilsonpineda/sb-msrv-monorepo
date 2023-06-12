@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
  *
  */
 @NoArgsConstructor
-@ResponseStatus(value = HttpStatus.UNAUTHORIZED, reason = "You are not allowed to access this resource")
+@ResponseStatus(value = HttpStatus.UNAUTHORIZED)
 public class UnauthorizedException extends RuntimeException{
 
 	private static final long serialVersionUID = -5009350581431984092L;
